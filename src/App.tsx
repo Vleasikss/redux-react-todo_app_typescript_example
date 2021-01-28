@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {connect} from "react-redux";
+import {IAppState} from "./store/AppStore";
+import TodoHeader from "./components/todo-header/TodoHeader";
+import {Task} from "./models/Task";
+import TaskForm from "./components/task-form/TaskForm";
+import TaskList from "./components/task-list/TaskList";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+type AppProps = {
+    tasks: Array<Task>
+}
+const App:React.FC<AppProps> = ({tasks}) => {
+    return(
+        <div>
+            <TodoHeader name={"test"}/>
+            <TaskForm/>
+            <TaskList tasks={tasks}/>
+        </div>
+    );
+
+
 }
 
-export default App;
+const mapStateToProps = (state:IAppState) => ({
+    tasks: state.tasks,
+})
+
+export default connect(mapStateToProps)(App);
